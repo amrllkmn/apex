@@ -1,9 +1,9 @@
 APP_NAME := apex-app
 run:
-	go run .
+	go run ./cmd
 
 build:
-	go build -o $(APP_NAME) .
+	go build -o $(APP_NAME) ./cmd
 
 clean:
 	rm -rf $(APP_NAME)
