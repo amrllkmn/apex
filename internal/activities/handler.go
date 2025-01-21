@@ -64,3 +64,10 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 		"activity": activity,
 	})
 }
+
+func (handler *Handler) HandleGetActivities(c *gin.Context) {
+	activities := handler.service.GetActivities()
+	c.JSON(http.StatusOK, gin.H{
+		"activities": activities,
+	})
+}

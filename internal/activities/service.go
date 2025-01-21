@@ -17,6 +17,7 @@ type Activity struct {
 
 // the Activity Service interface
 type ActivityService interface {
+	GetActivities() []Activity
 	GetActivity(id int) (string, error)
 	CreateActivity(activity *Activity) (string, error)
 }
@@ -33,6 +34,10 @@ func (svc *Service) GetActivity(id int) (string, error) {
 func (svc *Service) CreateActivity(activity *Activity) (string, error) {
 	fmt.Println(*activity)
 	return "Created activity", nil
+}
+
+func (svc *Service) GetActivities() []Activity {
+	return []Activity{}
 }
 
 func NewService() ActivityService {
