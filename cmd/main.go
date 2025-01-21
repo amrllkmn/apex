@@ -6,10 +6,7 @@ import (
 )
 
 func main() {
-	activityService := activities.NewService()
-	activitiesHandler := activities.NewHandler(activityService)
 	r := gin.Default()
-	r.GET("/hello/:name", activities.HandleHello)
-	r.GET("/activities/:id", activitiesHandler.HandleReadActivity)
+	r = activities.SetupRouter(r)
 	r.Run() // Run and serve on 8080
 }

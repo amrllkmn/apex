@@ -18,14 +18,6 @@ func NewHandler(service ActivityService) *Handler {
 	}
 }
 
-func HandleHello(c *gin.Context) {
-	name := c.Param("name")
-	message := "Hello " + name
-	c.JSON(http.StatusOK, gin.H{
-		"message": message,
-	})
-}
-
 func (handler *Handler) HandleReadActivity(c *gin.Context) {
 	activity_id, error := strconv.Atoi(c.Param("id"))
 	if error != nil {
