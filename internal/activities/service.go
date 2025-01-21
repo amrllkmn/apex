@@ -1,10 +1,12 @@
 package activities
 
+import "fmt"
+
 // the Activity Model
 type Activity struct {
 	id    int
 	count int
-	title string
+	Title string `json:"title"`
 }
 
 // the Activity DB Layer
@@ -16,6 +18,7 @@ type Activity struct {
 // the Activity Service interface
 type ActivityService interface {
 	GetActivity(id int) (string, error)
+	CreateActivity(activity *Activity) (string, error)
 }
 
 // the Service struct
@@ -24,7 +27,12 @@ type Service struct{}
 // Take data from handler and call create an Activity
 // Take data from handler and call read an Activity
 func (svc *Service) GetActivity(id int) (string, error) {
-	return "Hello", nil
+	return "Got activity", nil
+}
+
+func (svc *Service) CreateActivity(activity *Activity) (string, error) {
+	fmt.Println(*activity)
+	return "Created activity", nil
 }
 
 func NewService() ActivityService {

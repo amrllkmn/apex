@@ -39,3 +39,28 @@ func (handler *Handler) HandleReadActivity(c *gin.Context) {
 		"message": activity,
 	})
 }
+
+func (handler *Handler) HandleCreateActivity(c *gin.Context) {
+	body := Activity{}
+	err := c.BindJSON(&body)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err,
+		})
+		return
+	}
+
+	activity, serviceError := handler.service.CreateActivity(&body)
+
+	if serviceError != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": serviceError,
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"activity": activity,
+	})
+}
