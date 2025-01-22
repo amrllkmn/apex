@@ -105,7 +105,6 @@ func (handler *Handler) HandleUpdateActivity(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": activity,
 	})
-	return
 }
 
 func (handler *Handler) HandleDeleteActivity(c *gin.Context) {
