@@ -8,5 +8,5 @@ import (
 func main() {
 	r := gin.Default()
 	r = activities.SetupRouter(r)
-	r.Run() // Run and serve on 8080
+	r.Run(":8081") // Run and serve on 8080
 }
