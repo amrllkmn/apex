@@ -1,6 +1,17 @@
 package activities
 
-import "fmt"
+import (
+	"fmt"
+
+	"gorm.io/gorm"
+)
+
+// the Activity Model
+type Activity struct {
+	gorm.Model
+	Count int    `json:"count"`
+	Title string `json:"title"`
+}
 
 type ActivityRepository interface {
 	FindById()
@@ -28,10 +39,10 @@ func (repo *Repository) CreateOne() {
 }
 
 type Repository struct {
-	DB int
+	DB *gorm.DB
 }
 
-func NewRepo(db int) ActivityRepository {
+func NewRepo(db *gorm.DB) ActivityRepository {
 	return &Repository{
 		DB: db,
 	}

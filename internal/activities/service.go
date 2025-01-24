@@ -1,12 +1,5 @@
 package activities
 
-// the Activity Model
-type Activity struct {
-	id    int
-	count int
-	Title string `json:"title"`
-}
-
 // the Activity DB Layer
 // Create an Activity
 // Read an Activity
