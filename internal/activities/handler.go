@@ -32,12 +32,12 @@ func (handler *Handler) HandleReadActivity(c *gin.Context) {
 	activity, err := handler.service.GetActivity(activity_id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "No activity with id" + c.Param("id"),
+			"message": "No activity with id " + c.Param("id"),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": activity,
+		"activity": activity,
 	})
 }
 
@@ -52,8 +52,8 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 		return
 	}
 
-	activity, serviceError := handler.service.CreateActivity(&body)
-
+	_, serviceError := handler.service.CreateActivity(&body)
+	fmt.Println(body)
 	if serviceError != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": serviceError,
@@ -62,12 +62,17 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"activity": activity,
+		"activity": body,
 	})
 }
 
 func (handler *Handler) HandleGetActivities(c *gin.Context) {
-	activities := handler.service.GetActivities()
+	activities, err := handler.service.GetActivities()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Something went wrong",
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"activities": activities,
 	})
@@ -93,17 +98,17 @@ func (handler *Handler) HandleUpdateActivity(c *gin.Context) {
 		return
 	}
 
-	activity, svcErr := handler.service.UpdateActivity(activity_id, &body)
-	fmt.Println(activity)
+	svcMsg, svcErr := handler.service.UpdateActivity(activity_id, &body)
 	if svcErr != nil {
+		fmt.Println(svcErr)
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "No activity with id" + c.Param("id"),
+			"message": svcMsg,
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": activity,
+		"message": svcMsg,
 	})
 }
 
@@ -117,7 +122,7 @@ func (handler *Handler) HandleDeleteActivity(c *gin.Context) {
 		return
 	}
 
-	activity, err := handler.service.DeleteActivity(activity_id)
+	msg, err := handler.service.DeleteActivity(activity_id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "No activity with id" + c.Param("id"),
@@ -125,6 +130,6 @@ func (handler *Handler) HandleDeleteActivity(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": activity,
+		"message": msg,
 	})
 }

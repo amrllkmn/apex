@@ -2,5 +2,5 @@
 An CRUD API for tracking your habits.
 
 ## Stack
-- Go (Gin)
-- PostgreSQL
+- Go (Gin, Gorm)
+- SQLite
