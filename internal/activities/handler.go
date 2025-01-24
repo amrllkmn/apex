@@ -67,7 +67,12 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 }
 
 func (handler *Handler) HandleGetActivities(c *gin.Context) {
-	activities := handler.service.GetActivities()
+	activities, err := handler.service.GetActivities()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Something went wrong",
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"activities": activities,
 	})
