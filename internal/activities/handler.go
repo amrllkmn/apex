@@ -122,7 +122,7 @@ func (handler *Handler) HandleDeleteActivity(c *gin.Context) {
 		return
 	}
 
-	activity, err := handler.service.DeleteActivity(activity_id)
+	msg, err := handler.service.DeleteActivity(activity_id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "No activity with id" + c.Param("id"),
@@ -130,6 +130,6 @@ func (handler *Handler) HandleDeleteActivity(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": activity,
+		"message": msg,
 	})
 }

@@ -17,8 +17,11 @@ type ActivityService interface {
 
 // Take data from handler and call create an Activity
 func (svc *Service) CreateActivity(activity *Activity) (string, error) {
-	svc.repository.CreateOne(activity)
-	return "Created activity", nil
+	err := svc.repository.CreateOne(activity)
+	if err != nil {
+		return "Failed to create", err
+	}
+	return "Activity created", nil
 }
 
 // Take data from handler and call read an Activity
@@ -50,7 +53,10 @@ func (svc *Service) UpdateActivity(id int, activity *Activity) (string, error) {
 
 // Take data from handler and call delete an Activity
 func (svc *Service) DeleteActivity(id int) (string, error) {
-	svc.repository.DeleteById()
+	deleteErr := svc.repository.DeleteById(id)
+	if deleteErr != nil {
+		return "Failed delete", deleteErr
+	}
 	return "Deleted activity", nil
 }
 
