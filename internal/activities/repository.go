@@ -14,15 +14,22 @@ type Activity struct {
 }
 
 type ActivityRepository interface {
-	FindById()
+	FindById(id int) (Activity, error)
 	FindAll()
 	UpdateById()
 	DeleteById()
 	CreateOne(activity *Activity)
 }
 
-func (repo *Repository) FindById() {
+func (repo *Repository) FindById(id int) (Activity, error) {
 	fmt.Println("I'm finding by id")
+	var activity Activity
+	result := repo.DB.First(&activity, id)
+	if result.Error != nil {
+		fmt.Println("No record found")
+		return Activity{}, result.Error
+	}
+	return activity, nil
 }
 func (repo *Repository) FindAll() {
 	fmt.Println("I'm finding all")

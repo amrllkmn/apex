@@ -9,7 +9,7 @@ package activities
 // the Activity Service interface
 type ActivityService interface {
 	GetActivities() []Activity
-	GetActivity(id int) (string, error)
+	GetActivity(id int) (Activity, error)
 	CreateActivity(activity *Activity) (string, error)
 	UpdateActivity(id int, activity *Activity) (string, error)
 	DeleteActivity(id int) (string, error)
@@ -22,9 +22,12 @@ func (svc *Service) CreateActivity(activity *Activity) (string, error) {
 }
 
 // Take data from handler and call read an Activity
-func (svc *Service) GetActivity(id int) (string, error) {
-	svc.repository.FindById()
-	return "Got activity", nil
+func (svc *Service) GetActivity(id int) (Activity, error) {
+	activity, err := svc.repository.FindById(id)
+	if err != nil {
+		return activity, err
+	}
+	return activity, nil
 }
 
 func (svc *Service) GetActivities() []Activity {

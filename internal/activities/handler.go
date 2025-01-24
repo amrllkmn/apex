@@ -32,12 +32,12 @@ func (handler *Handler) HandleReadActivity(c *gin.Context) {
 	activity, err := handler.service.GetActivity(activity_id)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "No activity with id" + c.Param("id"),
+			"message": "No activity with id " + c.Param("id"),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": activity,
+		"activity": activity,
 	})
 }
 
