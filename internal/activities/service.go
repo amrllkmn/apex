@@ -1,7 +1,5 @@
 package activities
 
-import "fmt"
-
 // the Activity Model
 type Activity struct {
 	id    int
@@ -26,33 +24,40 @@ type ActivityService interface {
 
 // Take data from handler and call create an Activity
 func (svc *Service) CreateActivity(activity *Activity) (string, error) {
-	fmt.Println(*activity)
+	svc.repository.CreateOne()
 	return "Created activity", nil
 }
 
 // Take data from handler and call read an Activity
 func (svc *Service) GetActivity(id int) (string, error) {
+	svc.repository.FindById()
 	return "Got activity", nil
 }
 
 func (svc *Service) GetActivities() []Activity {
+	svc.repository.FindAll()
 	return []Activity{}
 }
 
 // Take data from handler and call update an Activity
 func (svc *Service) UpdateActivity(id int, activity *Activity) (string, error) {
-	fmt.Println(*activity)
+	svc.repository.UpdateById()
 	return "Updated activity", nil
 }
 
 // Take data from handler and call delete an Activity
 func (svc *Service) DeleteActivity(id int) (string, error) {
+	svc.repository.DeleteById()
 	return "Deleted activity", nil
 }
 
 // the Service struct
-type Service struct{}
+type Service struct {
+	repository ActivityRepository
+}
 
-func NewService() ActivityService {
-	return &Service{}
+func NewService(activityRepo ActivityRepository) ActivityService {
+	return &Service{
+		repository: activityRepo,
+	}
 }
