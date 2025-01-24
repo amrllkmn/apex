@@ -16,7 +16,7 @@ type Activity struct {
 type ActivityRepository interface {
 	FindById(id int) (Activity, error)
 	FindAll()
-	UpdateById()
+	UpdateById(id int, activity *Activity) (string, error)
 	DeleteById()
 	CreateOne(activity *Activity)
 }
@@ -34,8 +34,17 @@ func (repo *Repository) FindById(id int) (Activity, error) {
 func (repo *Repository) FindAll() {
 	fmt.Println("I'm finding all")
 }
-func (repo *Repository) UpdateById() {
+func (repo *Repository) UpdateById(id int, activity *Activity) (string, error) {
 	fmt.Println("I'm updating by id")
+	result := repo.DB.Model(&Activity{}).Where("id = ?", id).Updates(activity)
+
+	if result.Error != nil {
+		fmt.Println("Failed to update")
+		return "Failed to update", result.Error
+	}
+
+	return "Update successful", nil
+
 }
 func (repo *Repository) DeleteById() {
 	fmt.Println("I'm deleting by id")

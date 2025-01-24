@@ -93,17 +93,17 @@ func (handler *Handler) HandleUpdateActivity(c *gin.Context) {
 		return
 	}
 
-	activity, svcErr := handler.service.UpdateActivity(activity_id, &body)
-	fmt.Println(activity)
+	svcMsg, svcErr := handler.service.UpdateActivity(activity_id, &body)
 	if svcErr != nil {
+		fmt.Println(svcErr)
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "No activity with id" + c.Param("id"),
+			"message": svcMsg,
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": activity,
+		"message": svcMsg,
 	})
 }
 

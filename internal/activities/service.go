@@ -37,8 +37,11 @@ func (svc *Service) GetActivities() []Activity {
 
 // Take data from handler and call update an Activity
 func (svc *Service) UpdateActivity(id int, activity *Activity) (string, error) {
-	svc.repository.UpdateById()
-	return "Updated activity", nil
+	updatedActivity, err := svc.repository.UpdateById(id, activity)
+	if err != nil {
+		return updatedActivity, err
+	}
+	return updatedActivity, nil
 }
 
 // Take data from handler and call delete an Activity
