@@ -52,8 +52,8 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 		return
 	}
 
-	activity, serviceError := handler.service.CreateActivity(&body)
-
+	_, serviceError := handler.service.CreateActivity(&body)
+	fmt.Println(body)
 	if serviceError != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": serviceError,
@@ -62,7 +62,7 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"activity": activity,
+		"activity": body,
 	})
 }
 

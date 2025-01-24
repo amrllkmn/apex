@@ -17,7 +17,7 @@ type ActivityService interface {
 
 // Take data from handler and call create an Activity
 func (svc *Service) CreateActivity(activity *Activity) (string, error) {
-	svc.repository.CreateOne()
+	svc.repository.CreateOne(activity)
 	return "Created activity", nil
 }
 
