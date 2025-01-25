@@ -47,7 +47,7 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": err,
+			"message": err.Error(),
 		})
 		return
 	}
@@ -56,7 +56,7 @@ func (handler *Handler) HandleCreateActivity(c *gin.Context) {
 	fmt.Println(body)
 	if serviceError != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": serviceError,
+			"message": serviceError.Error(),
 		})
 		return
 	}
@@ -93,7 +93,7 @@ func (handler *Handler) HandleUpdateActivity(c *gin.Context) {
 
 	if bindErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": bindErr,
+			"message": bindErr.Error(),
 		})
 		return
 	}
